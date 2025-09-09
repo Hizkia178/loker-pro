@@ -73,7 +73,7 @@ export default function HomePage() {
 
     return (
         <div className="min-h-screen bg-gradient-to-br from-green-100 via-white to-emerald-200">
-            <section className="relative pt-16 pb-24 overflow-hidden">
+            <section className="relative pt-12 pb-24 overflow-hidden">
                 <div className="absolute inset-0 bg-gradient-to-r from-green-600/5 to-emerald-600/5"></div>
                 <div className="absolute top-20 left-10 w-72 h-72 bg-gradient-to-br from-green-400/10 to-emerald-500/10 rounded-full blur-3xl"></div>
                 <div className="absolute bottom-10 right-10 w-96 h-96 bg-gradient-to-br from-emerald-400/10 to-green-500/10 rounded-full blur-3xl"></div>
