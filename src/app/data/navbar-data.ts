@@ -1,3 +1,5 @@
+// navbar-data.ts //
+
 import {
   Home,
   Search,
@@ -70,7 +72,7 @@ export const navbarData: NavbarData = {
       name: "Cari Loker",
       href: "/search-jobs",
       icon: Search,
-      active: true,
+      active: false,
       description: "Temukan pekerjaan impian"
     }
   ],

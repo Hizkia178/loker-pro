@@ -209,7 +209,7 @@ export default function NavbarUser() {
                       <Menu className="h-6 w-6 text-gray-600" />
                     </Button>
                   </SheetTrigger>
-                  <SheetContent side="left" className="w-80 border-r-0 shadow-2xl p-0 flex flex-col max-h-screen">
+                  <SheetContent side="left" className="w-75 border-r-0 shadow-2xl p-0 flex flex-col max-h-screen">
                     <div className="flex-shrink-0 p-6 pb-4 bg-white border-b border-gray-200">
                       <SheetHeader>
                         <SheetTitle className="flex items-center space-x-4 text-left">
