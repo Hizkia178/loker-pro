@@ -1,5 +1,4 @@
-// navbar-data.ts //
-
+// navbar-data.ts
 import {
   Home,
   Search,
@@ -10,13 +9,14 @@ import {
   Settings,
   Gift,
   Shield,
-  CreditCard
+  CreditCard,
+  type LucideIcon, 
 } from "lucide-react"
 
 export interface NavMenuItem {
   name: string
   href: string
-  icon: any
+  icon: LucideIcon
   active?: boolean
   badge?: string | number
   description?: string
@@ -41,9 +41,9 @@ export const navbarData: NavbarData = {
     name: "John Doe",
     email: "john.doe@email.com",
     role: "Software Developer",
-    avatar: "https://github.com/shadcn.png"
+    avatar: "https://github.com/shadcn.png",
   },
-  
+
   desktopMenu: [
     {
       name: "Lamaran Saya",
@@ -51,46 +51,46 @@ export const navbarData: NavbarData = {
       icon: FileText,
       active: false,
       badge: "3",
-      description: "Lihat status lamaran kerja"
+      description: "Lihat status lamaran kerja",
     },
     {
       name: "Tawaran Kerja",
-      href: "/job-offers", 
+      href: "/job-offers",
       icon: Gift,
       active: false,
       badge: "2",
-      description: "Tawaran pekerjaan untuk Anda"
+      description: "Tawaran pekerjaan untuk Anda",
     },
     {
       name: "Loker Disimpan",
       href: "/saved-jobs",
       icon: Bookmark,
       active: false,
-      description: "Pekerjaan yang telah disimpan"
+      description: "Pekerjaan yang telah disimpan",
     },
     {
       name: "Cari Loker",
       href: "/search-jobs",
       icon: Search,
       active: false,
-      description: "Temukan pekerjaan impian"
-    }
+      description: "Temukan pekerjaan impian",
+    },
   ],
-  
+
   mobileMenu: [
     {
       name: "Dashboard",
       href: "/dashboard",
       icon: Home,
       active: false,
-      description: "Ringkasan aktivitas Anda"
+      description: "Ringkasan aktivitas Anda",
     },
     {
       name: "Cari Loker",
       href: "/search-jobs",
       icon: Search,
       active: true,
-      description: "Temukan pekerjaan impian"
+      description: "Temukan pekerjaan impian",
     },
     {
       name: "Lamaran Kerja",
@@ -98,7 +98,7 @@ export const navbarData: NavbarData = {
       icon: FileText,
       active: false,
       badge: 3,
-      description: "Lihat status lamaran kerja"
+      description: "Lihat status lamaran kerja",
     },
     {
       name: "Tawaran Kerja",
@@ -106,14 +106,14 @@ export const navbarData: NavbarData = {
       icon: Gift,
       active: false,
       badge: 2,
-      description: "Tawaran pekerjaan untuk Anda"
+      description: "Tawaran pekerjaan untuk Anda",
     },
     {
       name: "Loker Disimpan",
       href: "/saved-jobs",
       icon: Bookmark,
       active: false,
-      description: "Pekerjaan yang telah disimpan"
+      description: "Pekerjaan yang telah disimpan",
     },
     {
       name: "Notifikasi",
@@ -121,52 +121,52 @@ export const navbarData: NavbarData = {
       icon: Bell,
       active: false,
       badge: 5,
-      description: "Pemberitahuan terbaru"
+      description: "Pemberitahuan terbaru",
     },
     {
       name: "Profile",
       href: "/profile",
       icon: User,
       active: false,
-      description: "Kelola profil Anda"
+      description: "Kelola profil Anda",
     },
     {
       name: "Pengaturan",
       href: "/settings",
       icon: Settings,
       active: false,
-      description: "Preferensi dan pengaturan"
-    }
+      description: "Preferensi dan pengaturan",
+    },
   ],
-  
+
   userDropdownMenu: [
     {
       name: "Profile Saya",
       href: "/profile",
       icon: User,
       active: false,
-      description: "Kelola profil dan CV"
+      description: "Kelola profil dan CV",
     },
     {
       name: "Pengaturan Akun",
       href: "/settings",
       icon: Settings,
       active: false,
-      description: "Preferensi dan privasi"
+      description: "Preferensi dan privasi",
     },
     {
       name: "Keamanan",
       href: "/security",
       icon: Shield,
       active: false,
-      description: "Password dan keamanan"
+      description: "Password dan keamanan",
     },
     {
       name: "Langganan",
       href: "/subscription",
       icon: CreditCard,
       active: false,
-      description: "Kelola paket premium"
-    }
-  ]
+      description: "Kelola paket premium",
+    },
+  ],
 }
