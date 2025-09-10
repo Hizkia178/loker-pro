@@ -20,9 +20,10 @@ import {
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
-import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
+import { Avatar, AvatarFallback } from '@/components/ui/avatar';
 import { Separator } from '@/components/ui/separator';
 import clsx from 'clsx';
+import Link from 'next/link';
 
 interface JobData {
   id: string;
@@ -336,11 +337,14 @@ export default function JobsPremium() {
           className="px-8 py-3 bg-gradient-to-r from-red-500 to-pink-600 hover:from-red-600 hover:to-pink-700 text-white shadow-lg hover:shadow-xl transition-all duration-300 h-12"
           asChild
         >
-          <a href="/cari-lowongan-kerja?premium=true" className="flex items-center space-x-2">
+          <Link
+            href="/cari-lowongan-kerja?premium=true"
+            className="flex items-center space-x-2"
+          >
             <Crown className="w-4 h-4" />
             <span>Lihat Semua Premium Jobs</span>
             <ChevronDown className="w-4 h-4" />
-          </a>
+          </Link>
         </Button>
       </div>
     </div>

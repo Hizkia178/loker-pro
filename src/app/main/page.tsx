@@ -3,6 +3,7 @@ import FooterPage from "./Footer"
 import HomePage from "./Home"
 import JobsPopuler from "./JobsPopuler"
 import JobsPremium from "./JobsPremium"
+import Candidates from "./Candidate"
 export default function HomePageMain() {
     return (
         <>
@@ -10,6 +11,7 @@ export default function HomePageMain() {
             <HomePage />
             <JobsPopuler />
             <JobsPremium />
+            <Candidates />
             <FooterPage />
         </>
     )
