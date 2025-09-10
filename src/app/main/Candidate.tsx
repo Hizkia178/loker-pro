@@ -21,7 +21,8 @@ import {
     Linkedin,
     Github,
     UserCheck,
-    Star
+    Star,
+    SearchX
 } from 'lucide-react';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
@@ -393,7 +394,7 @@ export default function Candidates() {
 
                 <div className="mt-4 lg:mt-0 flex flex-col sm:flex-row gap-3">
                     <Select value={selectedCategory} onValueChange={setSelectedCategory}>
-                        <SelectTrigger className="w-60 h-12 border-emerald-200 focus:border-emerald-500">
+                        <SelectTrigger className="w-full h-12 border-emerald-200 focus:border-emerald-500">
                             <SelectValue placeholder="Pilih kategori" />
                         </SelectTrigger>
                         <SelectContent>
@@ -409,7 +410,7 @@ export default function Candidates() {
                     </Select>
 
                     <Select value={selectedAvailability} onValueChange={setSelectedAvailability}>
-                        <SelectTrigger className="w-48 h-12 border-emerald-200 focus:border-emerald-500">
+                        <SelectTrigger className="w-full h-12 border-emerald-200 focus:border-emerald-500">
                             <SelectValue placeholder="Ketersediaan" />
                         </SelectTrigger>
                         <SelectContent>
@@ -450,11 +451,18 @@ export default function Candidates() {
                 </div>
             </div>
 
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 gap-6 mb-8">
-                {filteredCandidates.map((candidate) => (
-                    <CandidateCard key={candidate.id} candidate={candidate} />
-                ))}
-            </div>
+            {filteredCandidates.length === 0 ? (
+                <div className="flex flex-col items-center justify-center py-12">
+                    <SearchX className="w-16 h-16 text-emerald-500 mb-4" />
+                    <p className="text-lg text-slate-600 font-medium">Tidak ada kandidat ditemukan</p>
+                </div>
+            ) : (
+                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 gap-6 mb-8">
+                    {filteredCandidates.map((candidate) => (
+                        <CandidateCard key={candidate.id} candidate={candidate} />
+                    ))}
+                </div>
+            )}
 
             <div className="text-center">
                 <Button

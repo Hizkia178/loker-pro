@@ -15,12 +15,13 @@ import {
     Monitor,
     ShoppingBag,
     Stethoscope,
-    PenTool
+    PenTool,
+    SearchX
 } from 'lucide-react';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
-import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
+import { Avatar, AvatarFallback } from '@/components/ui/avatar';
 import { Separator } from '@/components/ui/separator';
 import clsx from 'clsx';
 
@@ -137,13 +138,58 @@ const categories = [
     { value: "Marketing", label: "Marketing", icon: PenTool }
 ];
 
+const jobTypes = [
+    { value: "Semua", label: "Semua Jenis" },
+    { value: "Full Time", label: "Full Time" },
+    { value: "Part Time", label: "Part Time" },
+    { value: "Freelance", label: "Freelance" }
+];
+
+const educations = [
+    { value: "Semua", label: "Semua Pendidikan" },
+    { value: "SMA / SMK / STM", label: "SMA/SMK" },
+    { value: "Diploma/D1/D2/D3", label: "D3" },
+    { value: "Sarjana / S1", label: "Sarjana / S1" }
+];
+
+const sorts = [
+    { value: "newest", label: "Newest" },
+    { value: "oldest", label: "Oldest" }
+];
+
 export default function JobsPopuler() {
     const [selectedCategory, setSelectedCategory] = useState("Semua");
+    const [selectedJobType, setSelectedJobType] = useState("Semua");
+    const [selectedEducation, setSelectedEducation] = useState("Semua");
+    const [selectedSort, setSelectedSort] = useState("newest");
     const [likedJobs, setLikedJobs] = useState<Set<string>>(new Set());
 
-    const filteredJobs = selectedCategory === "Semua"
-        ? jobsPopularData
-        : jobsPopularData.filter(job => job.category === selectedCategory);
+    const parseTimePosted = (time: string) => {
+        const match = time.match(/(\d+)\s*(menit|jam)/);
+        if (!match) return 0;
+        const value = parseInt(match[1]);
+        return match[2] === "menit" ? value : value * 60;
+    };
+
+    let filteredJobs = jobsPopularData;
+
+    if (selectedCategory !== "Semua") {
+        filteredJobs = filteredJobs.filter(job => job.category === selectedCategory);
+    }
+
+    if (selectedJobType !== "Semua") {
+        filteredJobs = filteredJobs.filter(job => job.jobType === selectedJobType);
+    }
+
+    if (selectedEducation !== "Semua") {
+        filteredJobs = filteredJobs.filter(job => job.education.includes(selectedEducation));
+    }
+
+    filteredJobs = [...filteredJobs].sort((a, b) => {
+        const timeA = parseTimePosted(a.timePosted);
+        const timeB = parseTimePosted(b.timePosted);
+        return selectedSort === "newest" ? timeA - timeB : timeB - timeA;
+    });
 
     const toggleLike = (jobId: string) => {
         const newLikedJobs = new Set(likedJobs);
@@ -160,7 +206,7 @@ export default function JobsPopuler() {
             "bg-white border border-slate-200 rounded-2xl p-6 transition-all duration-300",
             "hover:border-blue-200 hover:-translate-y-1 hover:bg-blue-50",
             "group cursor-pointer relative overflow-hidden",
-            "flex flex-col" // Tambahkan flex-col
+            "flex flex-col"
         )}>
             {/* Konten utama card */}
             <div className="flex-1">
@@ -249,6 +295,11 @@ export default function JobsPopuler() {
                     <span>{job.timePosted}</span>
                 </div>
             </div>
+
+            {/* Efek gradient overlay */}
+            <div className="absolute top-0 left-0 w-full h-full pointer-events-none">
+                <div className="absolute top-0 -left-full w-full h-full bg-gradient-to-r from-transparent via-white/20 to-transparent transform rotate-12 group-hover:left-full transition-all duration-1000"></div>
+            </div>
         </div>
     );
 
@@ -264,9 +315,9 @@ export default function JobsPopuler() {
                     </p>
                 </div>
 
-                <div className="mt-4 lg:mt-0">
+                <div className="mt-4 lg:mt-0 flex flex-col sm:flex-row gap-3">
                     <Select value={selectedCategory} onValueChange={setSelectedCategory}>
-                        <SelectTrigger className="w-72 h-12">
+                        <SelectTrigger className="w-full h-12 border-blue-200 focus:border-blue-500">
                             <SelectValue placeholder="Pilih kategori" />
                         </SelectTrigger>
                         <SelectContent>
@@ -280,23 +331,69 @@ export default function JobsPopuler() {
                             ))}
                         </SelectContent>
                     </Select>
+
+                    <Select value={selectedJobType} onValueChange={setSelectedJobType}>
+                        <SelectTrigger className="w-full h-12 border-blue-200 focus:border-blue-500">
+                            <SelectValue placeholder="Jenis Loker" />
+                        </SelectTrigger>
+                        <SelectContent>
+                            {jobTypes.map((type) => (
+                                <SelectItem key={type.value} value={type.value}>
+                                    {type.label}
+                                </SelectItem>
+                            ))}
+                        </SelectContent>
+                    </Select>
+
+                    <Select value={selectedEducation} onValueChange={setSelectedEducation}>
+                        <SelectTrigger className="w-full h-12 border-blue-200 focus:border-blue-500">
+                            <SelectValue placeholder="Pendidikan" />
+                        </SelectTrigger>
+                        <SelectContent>
+                            {educations.map((edu) => (
+                                <SelectItem key={edu.value} value={edu.value}>
+                                    {edu.label}
+                                </SelectItem>
+                            ))}
+                        </SelectContent>
+                    </Select>
+
+                    <Select value={selectedSort} onValueChange={setSelectedSort}>
+                        <SelectTrigger className="w-full h-12 border-blue-200 focus:border-blue-500">
+                            <SelectValue placeholder="Sort By" />
+                        </SelectTrigger>
+                        <SelectContent>
+                            {sorts.map((sort) => (
+                                <SelectItem key={sort.value} value={sort.value}>
+                                    {sort.label}
+                                </SelectItem>
+                            ))}
+                        </SelectContent>
+                    </Select>
                 </div>
             </div>
 
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-8">
-                {filteredJobs.map((job) => (
-                    <JobCard key={job.id} job={job} />
-                ))}
-            </div>
+            {filteredJobs.length === 0 ? (
+                <div className="flex flex-col items-center justify-center py-12">
+                    <SearchX className="w-16 h-16 text-blue-500 mb-4" />
+                    <p className="text-lg text-slate-600 font-medium">Tidak ada lowongan ditemukan</p>
+                </div>
+            ) : (
+                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-8">
+                    {filteredJobs.map((job) => (
+                        <JobCard key={job.id} job={job} />
+                    ))}
+                </div>
+            )}
 
             <div className="text-center">
                 <Button
                     size="lg"
-                    variant="outline"
-                    className="px-8 py-3 border-blue-200 text-blue-700 hover:bg-blue-50 hover:border-blue-300 transition-all duration-300 h-12"
+                    className="px-8 py-3 bg-gradient-to-r from-blue-500 to-blue-600 hover:from-blue-600 hover:to-blue-700 text-white shadow-lg hover:shadow-xl transition-all duration-300 h-12"
                     asChild
                 >
                     <a href="/cari-lowongan-kerja" className="flex items-center space-x-2">
+                        <Users className="w-4 h-4" />
                         <span>Lihat Lebih Banyak</span>
                         <ChevronDown className="w-4 h-4" />
                     </a>

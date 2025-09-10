@@ -15,7 +15,8 @@ import {
   PenTool,
   Users,
   TrendingUp,
-  Lightbulb
+  Lightbulb,
+  SearchX
 } from 'lucide-react';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
@@ -144,13 +145,57 @@ const categories = [
   { value: "Management", label: "Management", icon: TrendingUp }
 ];
 
+const jobTypes = [
+  { value: "Semua", label: "Semua Jenis" },
+  { value: "Full Time", label: "Full Time" },
+  { value: "Part Time", label: "Part Time" },
+  { value: "Freelance", label: "Freelance" }
+];
+
+const educations = [
+  { value: "Semua", label: "Semua Pendidikan" },
+  { value: "SMA/SMK", label: "SMA/SMK" },
+  { value: "D3", label: "D3" },
+  { value: "Sarjana / S1", label: "Sarjana / S1" },
+  { value: "Magister / S2", label: "Magister / S2" }
+];
+
+const sorts = [
+  { value: "newest", label: "Newest" },
+  { value: "oldest", label: "Oldest" }
+];
+
 export default function JobsPremium() {
   const [selectedCategory, setSelectedCategory] = useState("Semua");
+  const [selectedJobType, setSelectedJobType] = useState("Semua");
+  const [selectedEducation, setSelectedEducation] = useState("Semua");
+  const [selectedSort, setSelectedSort] = useState("newest");
   const [likedJobs, setLikedJobs] = useState<Set<string>>(new Set());
 
-  const filteredJobs = selectedCategory === "Semua"
-    ? jobsPremiumData
-    : jobsPremiumData.filter(job => job.category === selectedCategory);
+  const parseTimePosted = (time: string) => {
+    const match = time.match(/(\d+) jam/);
+    return match ? parseInt(match[1]) : 0;
+  };
+
+  let filteredJobs = jobsPremiumData;
+
+  if (selectedCategory !== "Semua") {
+    filteredJobs = filteredJobs.filter(job => job.category === selectedCategory);
+  }
+
+  if (selectedJobType !== "Semua") {
+    filteredJobs = filteredJobs.filter(job => job.jobType === selectedJobType);
+  }
+
+  if (selectedEducation !== "Semua") {
+    filteredJobs = filteredJobs.filter(job => job.education.includes(selectedEducation));
+  }
+
+  filteredJobs = [...filteredJobs].sort((a, b) => {
+    const timeA = parseTimePosted(a.timePosted);
+    const timeB = parseTimePosted(b.timePosted);
+    return selectedSort === "newest" ? timeA - timeB : timeB - timeA;
+  });
 
   const toggleLike = (jobId: string) => {
     const newLikedJobs = new Set(likedJobs);
@@ -167,7 +212,7 @@ export default function JobsPremium() {
       "bg-gradient-to-br from-white via-white to-red-50/30 border-2 border-red-200 rounded-2xl p-6 transition-all duration-300 relative overflow-hidden",
       "hover:bg-red-50 hover:border-red-200 hover:-translate-y-1",
       "group cursor-pointer",
-      "flex flex-col" // Tambahkan flex-col
+      "flex flex-col"
     )}>
       {/* Konten utama card */}
       <div className="flex-1">
@@ -294,9 +339,9 @@ export default function JobsPremium() {
           </p>
         </div>
 
-        <div className="mt-4 lg:mt-0">
+        <div className="mt-4 lg:mt-0 flex flex-col sm:flex-row gap-3">
           <Select value={selectedCategory} onValueChange={setSelectedCategory}>
-            <SelectTrigger className="w-72 h-12 border-red-200 focus:border-red-500">
+            <SelectTrigger className="w-full h-12 border-red-200 focus:border-red-500">
               <SelectValue placeholder="Pilih kategori" />
             </SelectTrigger>
             <SelectContent>
@@ -306,6 +351,45 @@ export default function JobsPremium() {
                     <category.icon className="w-4 h-4" />
                     <span>{category.label}</span>
                   </div>
+                </SelectItem>
+              ))}
+            </SelectContent>
+          </Select>
+
+          <Select value={selectedJobType} onValueChange={setSelectedJobType}>
+            <SelectTrigger className="w-full h-12 border-red-200 focus:border-red-500">
+              <SelectValue placeholder="Jenis Loker" />
+            </SelectTrigger>
+            <SelectContent>
+              {jobTypes.map((type) => (
+                <SelectItem key={type.value} value={type.value}>
+                  {type.label}
+                </SelectItem>
+              ))}
+            </SelectContent>
+          </Select>
+
+          <Select value={selectedEducation} onValueChange={setSelectedEducation}>
+            <SelectTrigger className="w-full h-12 border-red-200 focus:border-red-500">
+              <SelectValue placeholder="Pendidikan" />
+            </SelectTrigger>
+            <SelectContent>
+              {educations.map((edu) => (
+                <SelectItem key={edu.value} value={edu.value}>
+                  {edu.label}
+                </SelectItem>
+              ))}
+            </SelectContent>
+          </Select>
+
+          <Select value={selectedSort} onValueChange={setSelectedSort}>
+            <SelectTrigger className="w-full h-12 border-red-200 focus:border-red-500">
+              <SelectValue placeholder="Sort By" />
+            </SelectTrigger>
+            <SelectContent>
+              {sorts.map((sort) => (
+                <SelectItem key={sort.value} value={sort.value}>
+                  {sort.label}
                 </SelectItem>
               ))}
             </SelectContent>
@@ -325,11 +409,18 @@ export default function JobsPremium() {
         </div>
       </div>
 
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-8">
-        {filteredJobs.map((job) => (
-          <PremiumJobCard key={job.id} job={job} />
-        ))}
-      </div>
+      {filteredJobs.length === 0 ? (
+        <div className="flex flex-col items-center justify-center py-12">
+          <SearchX className="w-16 h-16 text-red-500 mb-4" />
+          <p className="text-lg text-slate-600 font-medium">Tidak ada lowongan ditemukan</p>
+        </div>
+      ) : (
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-8">
+          {filteredJobs.map((job) => (
+            <PremiumJobCard key={job.id} job={job} />
+          ))}
+        </div>
+      )}
 
       <div className="text-center">
         <Button
