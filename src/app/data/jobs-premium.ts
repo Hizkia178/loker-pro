@@ -1,0 +1,95 @@
+// jobs-premium.ts
+import { JobData } from "./jobs-populer";
+
+export const jobsPremiumData: JobData[] = [
+  {
+    id: "p1",
+    company: "PT Bank Central Asia Tbk",
+    title: "Senior Credit Analyst",
+    location: "Jakarta",
+    jobType: "Full Time",
+    education: ["Sarjana / S1"],
+    experience: "3-5 Tahun",
+    category: "Perbankan / Jasa Finansial",
+    tags: ["Credit Analysis", "Banking", "Risk Management"],
+    salary: "Rp 15 - 25 Juta",
+    timePosted: "1 jam yang lalu",
+    logo: "🏛️",
+    isPremium: true
+  },
+  {
+    id: "p2",
+    company: "Google Indonesia",
+    title: "Software Engineer",
+    location: "Jakarta",
+    jobType: "Full Time",
+    education: ["Sarjana / S1"],
+    experience: "2-4 Tahun",
+    category: "IT",
+    tags: ["Java", "Python", "Cloud Computing"],
+    salary: "Rp 20 - 35 Juta",
+    timePosted: "2 jam yang lalu",
+    logo: "🔍",
+    isPremium: true
+  },
+  {
+    id: "p3",
+    company: "PT Unilever Indonesia",
+    title: "Marketing Manager",
+    location: "Jakarta",
+    jobType: "Full Time",
+    education: ["Sarjana / S1"],
+    experience: "4-6 Tahun",
+    category: "Marketing",
+    tags: ["Digital Marketing", "Brand Management", "Strategy"],
+    salary: "Rp 18 - 30 Juta",
+    timePosted: "3 jam yang lalu",
+    logo: "🌟",
+    isPremium: true
+  },
+  {
+    id: "p4",
+    company: "McKinsey & Company",
+    title: "Management Consultant",
+    location: "Jakarta",
+    jobType: "Full Time",
+    education: ["Sarjana / S1"],
+    experience: "1-3 Tahun",
+    category: "Konsultan",
+    tags: ["Strategy", "Business Analysis", "Consulting"],
+    salary: "Rp 25 - 40 Juta",
+    timePosted: "4 jam yang lalu",
+    logo: "💼",
+    isPremium: true
+  },
+  {
+    id: "p5",
+    company: "PT Astra International",
+    title: "Finance Director",
+    location: "Jakarta",
+    jobType: "Full Time",
+    education: ["Sarjana / S1", "Magister / S2"],
+    experience: "8-12 Tahun",
+    category: "Perbankan / Jasa Finansial",
+    tags: ["Leadership", "Financial Planning", "Corporate Finance"],
+    salary: "Rp 50 - 80 Juta",
+    timePosted: "5 jam yang lalu",
+    logo: "🚗",
+    isPremium: true
+  },
+  {
+    id: "p6",
+    company: "PT Telkom Indonesia",
+    title: "Head of Digital Transformation",
+    location: "Bandung",
+    jobType: "Full Time",
+    education: ["Sarjana / S1", "Magister / S2"],
+    experience: "6-10 Tahun",
+    category: "IT",
+    tags: ["Digital Strategy", "Leadership", "Technology"],
+    salary: "Rp 30 - 50 Juta",
+    timePosted: "6 jam yang lalu",
+    logo: "📱",
+    isPremium: true
+  }
+];

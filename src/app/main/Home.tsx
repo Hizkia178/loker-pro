@@ -1,7 +1,7 @@
 "use client"
 
 import { useState } from "react"
-import { Search, MapPin, Briefcase, TrendingUp, Users, Building, Star } from "lucide-react"
+import { Search, MapPin, Briefcase, TrendingUp, Users, Building, Sparkles } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Badge } from "@/components/ui/badge"
@@ -80,9 +80,11 @@ export default function HomePage() {
                 <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
                     <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-16 items-center">
                         <div className="space-y-8">
-                            <div className="inline-flex items-center space-x-2 bg-gradient-to-r from-green-50 to-emerald-50 rounded-full px-6 py-3 border border-green-100 shadow-sm">
-                                <Star className="h-5 w-5 text-green-600" />
-                                <span className="text-sm font-semibold text-green-700">Platform #1 Pencari Kerja di Indonesia</span>
+                            <div className="inline-flex items-center gap-2 bg-white/80 backdrop-blur-md rounded-full px-6 py-3 border border-green-100 shadow-lg">
+                                <Sparkles className="h-4 w-4 text-green-600" />
+                                <span className="text-sm font-semibold bg-gradient-to-r from-green-600 to-emerald-600 bg-clip-text text-transparent">
+                                    Platform #1 Pencari Kerja di Indonesia
+                                </span>
                             </div>
                             <div className="space-y-6">
                                 <h1 className="text-4xl sm:text-5xl lg:text-6xl font-bold text-gray-900 leading-tight">
@@ -133,22 +135,24 @@ export default function HomePage() {
                                 </div>
                             </div>
                             <div className="space-y-4">
-                                <h3 className="text-lg font-semibold text-gray-900 flex items-center gap-2">
-                                    <TrendingUp className="h-5 w-5 text-green-600" />
+                                <div className="flex items-center gap-2 text-sm font-semibold text-gray-700">
+                                    <TrendingUp className="h-4 w-4 text-green-600" />
                                     Pencarian Populer
-                                </h3>
+                                </div>
                                 <div className="flex flex-wrap gap-2">
-                                    {homePageData.popularSearches.slice(0, 6).map((search) => (
-                                        <button
+                                    {homePageData.popularSearches.map((search) => (
+                                        <Button
                                             key={search.id}
+                                            variant="outline"
+                                            size="sm"
                                             onClick={() => handlePopularSearch(search.keyword, search.category)}
-                                            className="inline-flex items-center space-x-2 px-4 py-2 bg-white/70 hover:bg-gradient-to-r hover:from-green-50 hover:to-emerald-50 hover:text-green-700 rounded-full text-sm font-medium text-gray-700 transition-all duration-200 hover:shadow-md transform hover:scale-105 backdrop-blur-sm border border-gray-200/50 hover:border-green-200"
+                                            className="bg-white/70 backdrop-blur-sm border-green-200 text-gray-700 hover:bg-green-50 hover:text-green-700 hover:border-green-300 transition-all duration-200"
                                         >
-                                            <span>{search.keyword}</span>
-                                            <Badge variant="secondary" className="text-xs bg-gray-200 text-gray-600">
+                                            {search.keyword}
+                                            <span className="ml-2 bg-gray-100 text-gray-600 px-2 py-0.5 rounded-full text-xs">
                                                 {search.count}
-                                            </Badge>
-                                        </button>
+                                            </span>
+                                        </Button>
                                     ))}
                                 </div>
                             </div>
