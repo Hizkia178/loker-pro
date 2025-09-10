@@ -1,18 +1,9 @@
 "use client"
 
-import { useState } from "react"
-import { Search, MapPin, Briefcase, TrendingUp, Users, Building, Sparkles } from "lucide-react"
+import { ReactNode } from "react"
+import { useState, useEffect } from "react"
+import { Search, Briefcase, TrendingUp, Users, Building, Sparkles } from "lucide-react"
 import { Button } from "@/components/ui/button"
-import { Input } from "@/components/ui/input"
-import { Badge } from "@/components/ui/badge"
-import { Card, CardContent } from "@/components/ui/card"
-import {
-    Select,
-    SelectContent,
-    SelectItem,
-    SelectTrigger,
-    SelectValue,
-} from "@/components/ui/select"
 
 const homePageData = {
     heroSection: {
@@ -56,15 +47,62 @@ const homePageData = {
         { id: "denpasar", name: "Denpasar", province: "Bali", jobCount: 432 }
     ]
 }
+type FloatingElementProps = {
+  children: ReactNode
+  delay?: number
+  duration?: number
+}
+
+const FloatingElement = ({ children, delay = 0, duration = 4 }: FloatingElementProps) => {
+    return (
+        <div 
+            className="animate-caret-blink"
+            style={{
+                animationDelay: `${delay}s`,
+                animationDuration: `${duration}s`,
+                animationIterationCount: 'infinite',
+                animationTimingFunction: 'ease-in-out'
+            }}
+        >
+            {children}
+        </div>
+    )
+}
+
+type PulseElementProps = {
+  children: ReactNode
+  delay?: number
+}
+
+
+const PulseElement = ({ children, delay = 0 }: PulseElementProps) => {
+    return (
+        <div 
+            className="animate-ping"
+            style={{
+                animationDelay: `${delay}s`,
+                animationDuration: '3s',
+                animationIterationCount: 'infinite'
+            }}
+        >
+            {children}
+        </div>
+    )
+}
 
 export default function HomePage() {
-    const [searchKeyword, setSearchKeyword] = useState("")
-    const [selectedLocation, setSelectedLocation] = useState("")
-    const [selectedCategory, setSelectedCategory] = useState("")
+    const [, setSearchKeyword] = useState("")
+    const [] = useState("")
+    const [, setSelectedCategory] = useState("")
+    const [, setAnimationPhase] = useState(0)
 
-    const handleSearch = () => {
-        console.log("Search:", { keyword: searchKeyword, location: selectedLocation, category: selectedCategory })
-    }
+    useEffect(() => {
+        const interval = setInterval(() => {
+            setAnimationPhase(prev => (prev + 1) % 3)
+        }, 3000)
+        return () => clearInterval(interval)
+    }, [])
+
 
     const handlePopularSearch = (keyword: string, category: string) => {
         setSearchKeyword(keyword)
@@ -157,118 +195,152 @@ export default function HomePage() {
                                 </div>
                             </div>
                         </div>
-                        <div className="lg:pl-8">
-                            <Card className="shadow-lg border-0 bg-white/95 backdrop-blur-lg overflow-hidden">
-                                <CardContent className="p-6">
-                                    <div className="text-center mb-6">
-                                        <h3 className="text-xl font-bold text-gray-900 mb-1">Mulai Pencarian Anda</h3>
-                                        <p className="text-sm text-gray-600">
-                                            Temukan pekerjaan sesuai keahlian dan minat Anda
-                                        </p>
-                                    </div>
-                                    <div className="space-y-5">
-                                        <div>
-                                            <label htmlFor="keyword" className="block text-xs font-semibold text-gray-700 mb-2">Kata Kunci Pekerjaan</label>
-                                            <div className="relative">
-                                                <Search className="absolute left-4 top-1/2 transform -translate-y-1/2 h-4 w-4 text-gray-400" />
-                                                <Input
-                                                    id="keyword"
-                                                    name="keyword"
-                                                    placeholder="Contoh: Frontend Developer, UI/UX Designer"
-                                                    value={searchKeyword}
-                                                    onChange={(e) => setSearchKeyword(e.target.value)}
-                                                    className="pl-12 h-12 text-sm border-2 border-gray-200 focus:border-green-500 focus:ring-green-500 rounded-lg bg-gray-50 focus:bg-white transition-all duration-200 shadow-sm"
-                                                />
-                                            </div>
-                                        </div>
-                                        <div className="space-y-5">
-                                            <div>
-                                                <label htmlFor="location" className="block text-xs font-semibold text-gray-700 mb-2">Lokasi Pekerjaan</label>
-                                                <div className="relative">
-                                                    <MapPin className="absolute left-4 top-1/2 transform -translate-y-1/2 h-4 w-4 text-gray-400 z-10" />
-                                                    <Select value={selectedLocation} onValueChange={setSelectedLocation}>
-                                                        <SelectTrigger id="location" className="h-12 pl-12 text-sm border-2 w-full border-gray-200 focus:border-green-500 focus:ring-green-500 rounded-lg bg-gray-50 focus:bg-white shadow-sm">
-                                                            <SelectValue placeholder="Pilih kota atau wilayah" />
-                                                        </SelectTrigger>
-                                                        <SelectContent>
-                                                            {homePageData.locations.map((location) => (
-                                                                <SelectItem key={location.id} value={location.id}>
-                                                                    <div className="flex items-center justify-between w-full">
-                                                                        <span className="font-medium">{location.name}</span>
-                                                                        <div className="flex items-center space-x-2 ml-4">
-                                                                            <span className="text-xs text-gray-500">{location.province}</span>
-                                                                            <Badge variant="secondary" className="text-xs bg-green-100 text-green-700">
-                                                                                {location.jobCount}
-                                                                            </Badge>
-                                                                        </div>
-                                                                    </div>
-                                                                </SelectItem>
-                                                            ))}
-                                                        </SelectContent>
-                                                    </Select>
+                        
+                        {/* Animated Illustration Section */}
+                        <div className="lg:pl-8 flex items-center justify-center">
+                            <div className="relative w-full max-w-lg h-96">
+                                {/* Central Circle with rotating border */}
+                                <div className="absolute inset-0 flex items-center justify-center">
+                                    <div className="relative">
+                                        <div 
+                                            className="w-48 h-48 rounded-full border-4 border-green-200"
+                                            style={{
+                                                background: 'conic-gradient(from 0deg, rgba(34, 197, 94, 0.1), rgba(16, 185, 129, 0.3), rgba(34, 197, 94, 0.1))',
+                                                animation: 'spin 8s linear infinite'
+                                            }}
+                                        />
+                                        <div className="absolute inset-4 bg-white/95 backdrop-blur-lg rounded-full shadow-xl flex items-center justify-center">
+                                            <div className="text-center p-4">
+                                                <div className="w-16 h-16 bg-gradient-to-br from-green-500 to-emerald-500 rounded-full flex items-center justify-center mb-3 mx-auto shadow-lg animate-bounce">
+                                                    <Search className="h-8 w-8 text-white" />
                                                 </div>
-                                            </div>
-                                            <div>
-                                                <label htmlFor="category" className="block text-xs font-semibold text-gray-700 mb-2">Kategori Pekerjaan</label>
-                                                <div className="relative">
-                                                    <Briefcase className="absolute left-4 top-1/2 transform -translate-y-1/2 h-4 w-4 text-gray-400 z-10" />
-                                                    <Select value={selectedCategory} onValueChange={setSelectedCategory}>
-                                                        <SelectTrigger id="category" className="h-12 pl-12 text-sm border-2 w-full border-gray-200 focus:border-green-500 focus:ring-green-500 rounded-lg bg-gray-50 focus:bg-white shadow-sm">
-                                                            <SelectValue placeholder="Pilih bidang pekerjaan" />
-                                                        </SelectTrigger>
-                                                        <SelectContent>
-                                                            {homePageData.jobCategories.map((category) => (
-                                                                <SelectItem key={category.id} value={category.name}>
-                                                                    <div className="flex items-center justify-between w-full">
-                                                                        <span className="font-medium">{category.name}</span>
-                                                                        <div className="flex items-center space-x-2 ml-4">
-                                                                            {category.trending && (
-                                                                                <div className="flex items-center">
-                                                                                    <TrendingUp className="h-3 w-3 text-orange-500 mr-1" />
-                                                                                    <span className="text-xs text-orange-600 font-semibold">HOT</span>
-                                                                                </div>
-                                                                            )}
-                                                                            <Badge variant="secondary" className="text-xs bg-green-100 text-green-700">
-                                                                                {category.count}
-                                                                            </Badge>
-                                                                        </div>
-                                                                    </div>
-                                                                </SelectItem>
-                                                            ))}
-                                                        </SelectContent>
-                                                    </Select>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <Button
-                                            onClick={handleSearch}
-                                            size="lg"
-                                            className="w-full h-12 text-sm font-semibold bg-gradient-to-r from-green-600 to-emerald-700 hover:from-green-700 hover:to-emerald-800 rounded-lg shadow-md hover:shadow-lg transition-all duration-300"
-                                        >
-                                            <Search className="h-4 w-4 mr-2" />
-                                            Cari Pekerjaan
-                                        </Button>
-                                        <div className="pt-3 border-t border-gray-200">
-                                            <p className="text-xs font-semibold text-gray-700 mb-2">Pencarian Cepat:</p>
-                                            <div className="flex flex-wrap gap-2">
-                                                {homePageData.popularSearches.slice(0, 4).map((search) => (
-                                                    <button
-                                                        key={search.id}
-                                                        onClick={() => handlePopularSearch(search.keyword, search.category)}
-                                                        className="inline-flex items-center px-3 py-1.5 bg-gray-100 hover:bg-green-50 hover:text-green-700 rounded-full text-xs font-medium text-gray-600 transition-all duration-200 hover:shadow-sm"
-                                                    >
-                                                        {search.keyword}
-                                                    </button>
-                                                ))}
+                                                <h3 className="font-bold text-gray-900 mb-1">Cari & Temukan</h3>
+                                                <p className="text-xs text-gray-600">Pekerjaan Impian</p>
                                             </div>
                                         </div>
                                     </div>
-                                </CardContent>
-                            </Card>
+                                </div>
+
+                                {/* Floating Job Cards */}
+                                <FloatingElement delay={0}>
+                                    <div className="absolute top-8 left-4 bg-white/90 backdrop-blur-sm rounded-lg shadow-lg p-3 border border-green-100">
+                                        <div className="flex items-center gap-2">
+                                            <div className="w-8 h-8 bg-gradient-to-br from-green-400 to-emerald-500 rounded-lg flex items-center justify-center">
+                                                <Briefcase className="h-4 w-4 text-white" />
+                                            </div>
+                                            <div>
+                                                <div className="text-xs font-semibold text-gray-900">Frontend Dev</div>
+                                                <div className="text-xs text-gray-500">Jakarta</div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </FloatingElement>
+
+                                <FloatingElement delay={1}>
+                                    <div className="absolute top-12 right-6 bg-white/90 backdrop-blur-sm rounded-lg shadow-lg p-3 border border-green-100">
+                                        <div className="flex items-center gap-2">
+                                            <div className="w-8 h-8 bg-gradient-to-br from-emerald-400 to-green-500 rounded-lg flex items-center justify-center">
+                                                <Users className="h-4 w-4 text-white" />
+                                            </div>
+                                            <div>
+                                                <div className="text-xs font-semibold text-gray-900">UI/UX Designer</div>
+                                                <div className="text-xs text-gray-500">Bandung</div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </FloatingElement>
+
+                                <FloatingElement delay={2}>
+                                    <div className="absolute bottom-16 left-8 bg-white/90 backdrop-blur-sm rounded-lg shadow-lg p-3 border border-green-100">
+                                        <div className="flex items-center gap-2">
+                                            <div className="w-8 h-8 bg-gradient-to-br from-green-500 to-emerald-600 rounded-lg flex items-center justify-center">
+                                                <TrendingUp className="h-4 w-4 text-white" />
+                                            </div>
+                                            <div>
+                                                <div className="text-xs font-semibold text-gray-900">Data Analyst</div>
+                                                <div className="text-xs text-gray-500">Surabaya</div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </FloatingElement>
+
+                                <FloatingElement delay={1.5}>
+                                    <div className="absolute bottom-20 right-4 bg-white/90 backdrop-blur-sm rounded-lg shadow-lg p-3 border border-green-100">
+                                        <div className="flex items-center gap-2">
+                                            <div className="w-8 h-8 bg-gradient-to-br from-emerald-500 to-green-400 rounded-lg flex items-center justify-center">
+                                                <Building className="h-4 w-4 text-white" />
+                                            </div>
+                                            <div>
+                                                <div className="text-xs font-semibold text-gray-900">Product Manager</div>
+                                                <div className="text-xs text-gray-500">Yogyakarta</div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </FloatingElement>
+
+                                {/* Pulsing Dots */}
+                                <PulseElement delay={0}>
+                                    <div className="absolute top-24 right-12 w-3 h-3 bg-green-400 rounded-full"></div>
+                                </PulseElement>
+                                <PulseElement delay={1}>
+                                    <div className="absolute bottom-32 left-16 w-2 h-2 bg-emerald-400 rounded-full"></div>
+                                </PulseElement>
+                                <PulseElement delay={2}>
+                                    <div className="absolute top-16 left-20 w-2 h-2 bg-green-500 rounded-full"></div>
+                                </PulseElement>
+
+                                {/* Connecting Lines */}
+                                <div className="absolute inset-0 opacity-20">
+                                    <svg className="w-full h-full">
+                                        <defs>
+                                            <linearGradient id="lineGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+                                                <stop offset="0%" stopColor="rgb(34, 197, 94)" />
+                                                <stop offset="100%" stopColor="rgb(16, 185, 129)" />
+                                            </linearGradient>
+                                        </defs>
+                                        <path
+                                            d="M 50 50 Q 100 80 150 50 T 250 70"
+                                            stroke="url(#lineGradient)"
+                                            strokeWidth="2"
+                                            fill="none"
+                                            strokeDasharray="5,5"
+                                            className="animate-pulse"
+                                        />
+                                        <path
+                                            d="M 80 200 Q 150 160 220 200 T 320 180"
+                                            stroke="url(#lineGradient)"
+                                            strokeWidth="2"
+                                            fill="none"
+                                            strokeDasharray="5,5"
+                                            className="animate-pulse"
+                                            style={{ animationDelay: '1s' }}
+                                        />
+                                    </svg>
+                                </div>
+
+                                {/* Success Indicators */}
+                                <div className="absolute top-4 left-1/2 transform -translate-x-1/2 animate-bounce">
+                                    <div className="flex items-center gap-1 bg-green-100 rounded-full px-3 py-1">
+                                        <div className="w-2 h-2 bg-green-500 rounded-full animate-caret-blink"></div>
+                                        <span className="text-xs font-semibold text-green-700">15.4K+ Jobs</span>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
             </section>
+
+            <style jsx>{`
+                @keyframes spin {
+                    from {
+                        transform: rotate(0deg);
+                    }
+                    to {
+                        transform: rotate(360deg);
+                    }
+                }
+            `}</style>
         </div>
     )
 }

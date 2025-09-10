@@ -14,6 +14,7 @@ import {
 } from "@/components/ui/sheet"
 import { Button } from "@/components/ui/button"
 import { Badge } from "@/components/ui/badge"
+import { Separator } from "@/components/ui/separator"
 
 const navbarData = {
   menu: [
@@ -191,16 +192,15 @@ export default function NavbarPublic() {
                       <Menu className="h-6 w-6 text-gray-600" />
                     </Button>
                   </SheetTrigger>
+
                   <SheetContent side="left" className="w-75 border-l-0 shadow-2xl p-0 flex flex-col max-h-screen">
+                    {/* Header */}
                     <div className="flex-shrink-0 p-6 pb-4 bg-white">
                       <SheetHeader>
                         <div className="flex items-center justify-between">
                           <SheetTitle className="flex items-center space-x-3 text-left">
                             <div className="relative">
-
                               <div className="absolute inset-0 bg-white/10 rounded-lg blur"></div>
-
-
                               <div className="relative bg-green-600 p-2.5 rounded-lg flex items-center justify-center shadow-md">
                                 <Briefcase className="h-6 w-6 text-white" />
                               </div>
@@ -215,7 +215,11 @@ export default function NavbarPublic() {
                       </SheetHeader>
                     </div>
 
+                    {/* Separator setelah header */}
+                    <Separator className="mb-2" />
+
                     <div className="flex-1 overflow-y-auto">
+                      {/* Menu Navigasi */}
                       <div className="px-4 py-6 space-y-2">
                         {navbarData.menu.map((item) => (
                           <a
@@ -256,8 +260,11 @@ export default function NavbarPublic() {
                         ))}
                       </div>
 
+                      {/* Separator sebelum auth button */}
+                      <Separator className="my-4" />
+
                       {/* Mobile Auth Buttons */}
-                      <div className="px-4 pb-6 pt-4 border-t border-gray-200 space-y-3">
+                      <div className="px-4 pb-6 pt-2 space-y-3">
                         <Button
                           variant="outline"
                           className="w-full py-7 justify-start text-gray-700 hover:text-green-700 hover:bg-green-50 hover:border-green-200 transition-all duration-300"
