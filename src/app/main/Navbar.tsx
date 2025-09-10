@@ -3,6 +3,7 @@
 import { useState, useEffect } from "react"
 import { Menu, Briefcase, Search, Building2, Crown, Info, LogIn, UserPlus, UserSearch } from "lucide-react"
 import { cn } from "@/lib/utils"
+import Link from "next/link"
 import {
   Sheet,
   SheetContent,
@@ -97,7 +98,7 @@ export default function NavbarPublic() {
           <div className="flex items-center justify-between h-16">
             {/* Logo */}
             <div className="flex-shrink-0 flex items-center">
-              <a href="/" className="flex items-center">
+              <Link href="/" className="flex items-center">
                 <div className="relative">
                   <div className="absolute inset-0 bg-gradient-to-br from-green-500 to-emerald-600 rounded-lg blur opacity-75"></div>
                   <div className="relative bg-gradient-to-br from-green-600 to-emerald-700 p-2 rounded-lg">
@@ -110,7 +111,7 @@ export default function NavbarPublic() {
                   </span>
                   <div className="text-xs text-gray-500 font-medium">Find Your Dream Job</div>
                 </div>
-              </a>
+              </Link>
             </div>
 
             {/* Desktop Menu */}
@@ -160,20 +161,21 @@ export default function NavbarPublic() {
                   className="text-gray-700 hover:text-green-700 hover:bg-green-50 transition-all duration-300 font-medium"
                   asChild
                 >
-                  <a href="/authform/login" className="flex items-center space-x-2">
+                  <Link href="/authform/login" className="flex items-center space-x-2">
                     <LogIn className="h-4 w-4" />
                     <span>Login</span>
-                  </a>
+                  </Link>
                 </Button>
+
                 <Button
                   size="sm"
                   className="bg-gradient-to-r from-green-600 to-emerald-600 hover:from-green-700 hover:to-emerald-700 text-white shadow-lg hover:shadow-xl transition-all duration-300 font-medium"
                   asChild
                 >
-                  <a href="/authform/register" className="flex items-center space-x-2">
+                  <Link href="/authform/register" className="flex items-center space-x-2">
                     <UserPlus className="h-4 w-4" />
                     <span>Daftar</span>
-                  </a>
+                  </Link>
                 </Button>
               </div>
 
@@ -261,19 +263,28 @@ export default function NavbarPublic() {
                           className="w-full py-7 justify-start text-gray-700 hover:text-green-700 hover:bg-green-50 hover:border-green-200 transition-all duration-300"
                           asChild
                         >
-                          <a href="/authform/login" onClick={() => setIsOpen(false)} className="flex items-center space-x-3">
+                          <Link
+                            href="/authform/login"
+                            onClick={() => setIsOpen(false)}
+                            className="flex items-center space-x-3"
+                          >
                             <LogIn className="h-6 w-6" />
                             <span className="font-medium">Login ke Akun</span>
-                          </a>
+                          </Link>
                         </Button>
+
                         <Button
                           className="w-full py-7 justify-start bg-gradient-to-r from-green-600 to-emerald-600 hover:from-green-700 hover:to-emerald-700 text-white shadow-lg"
                           asChild
                         >
-                          <a href="/authform/register" onClick={() => setIsOpen(false)} className="flex items-center space-x-3">
+                          <Link
+                            href="/authform/register"
+                            onClick={() => setIsOpen(false)}
+                            className="flex items-center space-x-3"
+                          >
                             <UserPlus className="h-6 w-6" />
                             <span className="font-medium">Daftar Sekarang</span>
-                          </a>
+                          </Link>
                         </Button>
                       </div>
                     </div>
